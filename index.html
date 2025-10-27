@@ -281,21 +281,18 @@
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
       }
       .masonry {
-        column-count: 1;
-        column-gap: 1rem;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
       }
       .masonry-item {
-        break-inside: avoid;
-        margin-bottom: 1rem;
+        width: 100%;
+        aspect-ratio: 16/9;
+        overflow: hidden;
       }
-      @media (min-width: 640px) {
+      @media (min-width: 768px) {
         .masonry {
-          column-count: 2;
-        }
-      }
-      @media (min-width: 1024px) {
-        .masonry {
-          column-count: 3;
+          grid-template-columns: repeat(2, 1fr);
         }
       }
     </style>
@@ -465,7 +462,7 @@
                 Chennai
               </div>
               <p
-                class="text-lg mb-6 sm:mb-8 opacity-100 max-w-lg leading-relaxed font-semibold"
+                class="text-lg mb-6 sm:mb-8 opacity-100 max-w-md leading-relaxed font-semibold"
               >
                 Join 60+ DNEXT leaders for two transformative days of
                 innovation, collaboration, hands-on-training, strategic planning
@@ -480,13 +477,13 @@
                 </a>
                 <button
                   @click="scrollToSection('about')"
-                  class="w-full sm:w-auto text-center px-5 py-2.5 glass-dark text-white rounded-full font-semibold hover:bg-white/30 transition-all text-sm sm:text-base"
+                  class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-semibold hover:scale-105 transition-all pulse-glow text-sm sm:text-base"
                 >
                   Explore Event
                 </button>
                 <a
-                  href="https://docs.google.com/spreadsheets/d/1UrF_BUPfBhGSVYC5jeUuR5AmT6qcS8XRA_i28KueJZA/edit?gid=0#gid=0"
-class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from-green-500 to-teal-600 text-white rounded-full font-semibold hover:scale-105 transition-all text-sm sm:text-base whitespace-nowrap"
+                  href="https://docs.google.com/document/d/1gIk22fQUtYvQXj90kt4CeQfxkbip-kV6/edit"
+class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full font-semibold hover:scale-105 transition-all pulse-glow text-sm sm:text-base"
                 >
                   Guidelines
                 </a>
@@ -1090,13 +1087,13 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
                 class="masonry-item"
               >
                 <div
-                  class="rounded-2xl overflow-hidden cursor-pointer group relative image-card shadow-lg hover:shadow-xl transition-shadow"
+                  class="rounded-2xl overflow-hidden cursor-pointer group relative w-full h-full shadow-lg hover:shadow-xl transition-transform duration-300 hover:scale-105"
                   @click="openModal(image, galleryDays[galleryActiveDay].title)"
                 >
                   <img
                     :src="image.src"
                     :alt="image.alt"
-                    class="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                    class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                   <div
                     class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4"
@@ -1353,7 +1350,7 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
 
       <!-- Enhanced Modal for Gallery -->
       <div
-        v-if="modalImage"
+        v-if="modalImage && modalImage.src"
         class="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
         @click="closeModal"
         @keyup.esc="closeModal"
@@ -1639,8 +1636,8 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
               // Train
               {
                 location: "Kaup",
-                onwardCount: 14,
-                returnCount: 13,
+                onwardCount: 13,
+                returnCount: 11,
                 onwardLink:
                   "https://docs.google.com/spreadsheets/d/1m11GeuVGFE_VSIGooF7NytcBAZ-8xIfxWaOD_GpKrsA",
                 returnLink:
@@ -1648,7 +1645,7 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
               },
               {
                 location: "Kollu",
-                onwardCount: 11,
+                onwardCount: 9,
                 returnCount: 9,
                 onwardLink:
                   "https://docs.google.com/spreadsheets/d/1zVDbIEgCQk0xrrItHP_HgrIX-4wKQGM8BvCVmE1lAs4",
@@ -1657,8 +1654,8 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
               },
               {
                 location: "TNP",
-                onwardCount: 7,
-                returnCount: 7,
+                onwardCount: 8,
+                returnCount: 8,
                 onwardLink:
                   "https://docs.google.com/spreadsheets/d/1DpRzXOlH29D_wEa8rv2lySgeWocH0asN45JVYbhgsdI/edit?gid=0#gid=0",
                 returnLink:
@@ -2193,44 +2190,29 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
 
             galleryDays: [
               {
-                title: "Day 1 ",
+                title: "Day 1",
                 images: [
                   {
-                    src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    alt: "Opening ceremony with lamp lighting",
+                    src: "assets/IMG_4082.JPG",
+                    alt: "Summit event highlights",
                   },
                   {
-                    src: "https://images.unsplash.com/photo-1559223607-a43c990c692c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    alt: "Hackathon showcase and prize distribution",
-                  },
-                  {
-                    src: "https://images.unsplash.com/photo-1505373877841-8d25f7d46678?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    alt: "AI workshop session in progress",
-                  },
-                  {
-                    src: "https://images.unsplash.com/photo-1511578314322-379afb476865?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    alt: "Panel discussions and networking",
-                  },
+                    src: "assets/IMG_4113.JPG",
+                    alt: "Summit event highlights",
+                  }
                 ],
               },
               {
-                title: "Day 2 ",
+                title: "Day 2",
                 images: [
+                  
                   {
-                    src: "https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    alt: "Interactive engagement activities",
+                    src: "assets/IMG_7808.JPG",
+                    alt: "Summit event highlights",
                   },
                   {
-                    src: "https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    alt: "Panel discussions and team building",
-                  },
-                  {
-                    src: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    alt: "Group photo sessions",
-                  },
-                  {
-                    src: "https://images.unsplash.com/photo-1511512578047-dfb367046420?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                    alt: "Closing ceremony and team building finale",
+                    src: "assets/IMG_7834.JPG",
+                    alt: "Summit event highlights",
                   },
                 ],
               },
@@ -2238,31 +2220,31 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
 
             participantsList: [
               {
-                name: "Rudhra",
+                name: "Rudhramurthy Panjamani",
                 location: "Bengaluru",
                 process: "QAonCloud",
                 designation: "Director",
               },
               {
-                name: "Mani",
+                name: "Manivannan J K",
                 location: "Bengaluru",
                 process: "QAonCloud",
                 designation: "Director",
               },
               {
-                name: "Ravi",
+                name: "Ravi Kiran",
                 location: "Bengaluru",
                 process: "QAonCloud",
                 designation: "Director",
               },
               {
-                name: "Sushine",
+                name: "Sushine Ullas",
                 location: "Bengaluru",
                 process: "QAonCloud",
                 designation: "Director",
               },
               {
-                name: "Priyanka",
+                name: "Priyanka Prasad",
                 location: "Bengaluru",
                 process: "QAonCloud",
                 designation: "Director",
@@ -2299,6 +2281,12 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
               },
               {
                 name: "Indrani C",
+                location: "TN Palayam",
+                process: "QAonCloud",
+                designation: "Director",
+              },
+              {
+                name: "Nithyanandam",
                 location: "TN Palayam",
                 process: "QAonCloud",
                 designation: "Director",
@@ -2381,14 +2369,14 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
                 process: "QAonCloud",
                 designation: "Director",
               },
+              // {
+              //   name: "Shrikanth Bhatt",
+              //   location: "Kaup",
+              //   process: "QAonCloud",
+              //   designation: "Director",
+              // },
               {
-                name: "Shrikanth Bhatt",
-                location: "Kaup",
-                process: "QAonCloud",
-                designation: "Director",
-              },
-              {
-                name: "Shashivarrnan D",
+                name: "Shashivarnan D",
                 location: "Villupuram",
                 process: "QAonCloud",
                 designation: "Director",
@@ -2405,24 +2393,24 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
                 process: "QAonCloud",
                 designation: "Director",
               },
-              {
-                name: "Vinothkumar Palanivel",
-                location: "Kollu",
-                process: "QAonCloud",
-                designation: "Director",
-              },
+              // {
+              //   name: "Vinothkumar Palanivel",
+              //   location: "Kollu",
+              //   process: "QAonCloud",
+              //   designation: "Director",
+              // },
               {
                 name: "Bharathi V",
                 location: "Kollu",
                 process: "QAonCloud",
                 designation: "Director",
               },
-              {
-                name: "Karthiga G",
-                location: "Kollu",
-                process: "QAonCloud",
-                designation: "Director",
-              },
+              // {
+              //   name: "Karthiga G",
+              //   location: "Kollu",
+              //   process: "QAonCloud",
+              //   designation: "Director",
+              // },
               {
                 name: "Mohinder A Nag",
                 location: "Kollu",
@@ -2441,12 +2429,24 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
                 process: "QAonCloud",
                 designation: "Director",
               },
-              {
-                name: "Prabhagaran",
-                location: "Kollu",
-                process: "QAonCloud",
-                designation: "Director",
-              },
+              // {
+              //   name: "Prabhagaran",
+              //   location: "Kollu",
+              //   process: "QAonCloud",
+              //   designation: "Director",
+              // },
+              // {
+              //   name: "Berlin",
+              //   location: "Kollu",
+              //   process: "QAonCloud",
+              //   designation: "Director",
+              // },
+              // {
+              //   name: "Saranya",
+              //   location: "Kollu",
+              //   process: "QAonCloud",
+              //   designation: "Director",
+              // },
               {
                 name: "Monishree",
                 location: "Kollu",
@@ -2456,7 +2456,7 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
 
               {
                 name: "Sandip Sen",
-                location: "Delhi",
+                location: "Bengaluru",
                 process: "QAonCloud",
                 designation: "Director",
               },
@@ -2497,13 +2497,13 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
                 designation: "Director",
               },
               {
-                name: "Saloni",
+                name: "Saloni Malhotra",
                 location: "Delhi",
                 process: "QAonCloud",
                 designation: "Director",
               },
               {
-                name: "Rajiv",
+                name: "Rajiv Kuchal",
                 location: "Bengaluru",
                 process: "QAonCloud",
                 designation: "Director",
@@ -2515,26 +2515,26 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
                 designation: "Director",
               },
               {
-                name: "Nirmalya",
-                location: "Kaup",
+                name: "Nirmalya Sinha",
+                location: "Delhi",
                 process: "QAonCloud",
                 designation: "Director",
               },
               {
-                name: "Udhaya",
-                location: "Chennai",
+                name: "Udaya Priya T",
+                location: "Srivilliputhur",
                 process: "QAonCloud",
                 designation: "Director",
               },
               {
-                name: "Gengashree",
-                location: "Chennai",
+                name: "Gengashree N",
+                location: "Virudhunagar",
                 process: "QAonCloud",
                 designation: "Director",
               },
               {
-                name: "Sindhuja",
-                location: "Chennai",
+                name: "Sindhuja GNVS",
+                location: "Hyderabad",
                 process: "QAonCloud",
                 designation: "Director",
               },
@@ -2617,7 +2617,7 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
                 designation: "Director",
               },
               {
-                name: "Ajith Gautam",
+                name: "Ajit Gautam",
                 location: "Chennai",
                 process: "QAonCloud",
                 designation: "Director",
@@ -2628,6 +2628,12 @@ class="w-full sm:w-auto text-center px-5 py-2.5 btn-modern bg-gradient-to-r from
                 process: "QAonCloud",
                 designation: "Director",
               },
+              {
+                name: "Shubhadra",
+                location: "Chennai",
+                process: "QAonCloud",
+                designation: "Director",
+              }
             ],
           };
         },
